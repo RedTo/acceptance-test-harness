@@ -54,8 +54,43 @@ public class FlexiblePublishPluginTest extends AbstractJUnitTest {
         job.setLabelExpression(agent.getName());
 
         FlexiblePublisher publisher = job.addPublisher(FlexiblePublisher.class, p -> {
-            p.addPublisher(IssuesRecorder.class);
+            p.addPublisher(IssuesRecorder.class, r -> {
+                r.addTool("PMD");
+                r.setEnabledForFailure(true);
+            });
         });
+
+        System.out.println("test");
+    }
+
+    @Test
+    public void reference() {
+        SlaveController controller = new LocalSlaveController();
+        Slave agent;
+        try {
+            agent = controller.install(jenkins).get();
+        }
+        catch (InterruptedException | ExecutionException e) {
+            throw new AssertionError("Error while getting slave.", e);
+        }
+        agent.configure();
+        agent.setLabels("agent");
+        agent.save();
+        agent.waitUntilOnline();
+
+        //mail.setup(jenkins);
+
+        assertThat(agent.isOnline()).isTrue();
+        FreeStyleJob job = createFreeStyleJob();
+        job.configure();
+        job.setLabelExpression(agent.getName());
+
+
+        job.addPublisher(IssuesRecorder.class, r -> {
+            r.addTool("PMD");
+            r.setEnabledForFailure(true);
+        });
+
 
         System.out.println("test");
     }

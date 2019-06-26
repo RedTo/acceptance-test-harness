@@ -45,18 +45,55 @@ public class FlexiblePublisher extends AbstractStep implements PostBuildStep {
         return p;
     }
 
+    /**
+     * Adds the specified publisher to this job. Publishers are stored in a list member to provide
+     * later access for modification. After the publisher has been added the publisher is configured
+     * with the specified configuration lambda. Afterwards, the job configuration page still is visible and
+     * not saved.
+     *
+     * @param type          the publisher to configure
+     * @param configuration the additional configuration options for this job
+     * @param <T>           the type of the publisher
+     */
+    public <T extends PostBuildStep> T addPublisher(final Class<T> type, final Consumer<T> configuration) {
+        T p = addPublisher(type);
+        //configuration.accept(p);
+        return p;
+    }
+
+
+    //private <T extends Step> T addStep(final Class<T> type, final String section) {
+    //    ensureConfigPage();
+//
+    //    String path = createPageArea('/' + section, new Runnable() {
+    //        @Override public void run() {
+    //            control(by.path("/hetero-list-add[%s]", section)).selectDropdownMenu(type);
+    //        }
+    //    });
+    //    return newInstance(type, this, path);
+    //}
+
     private <T extends Step> T addStep(final Class<T> type) {
         // TODO: Ensure tat configuration page is opened
         //ensureConfigPage();
 
-        // TODO: Ensure that publisher has been added and is shown
-        //String path = createPageArea("/publisherList", new Runnable() {
-        //    @Override public void run() {
-        control(by.path("/publisher[FlexiblePublisher]/publishers/hetero-list-add[publisherList]")).selectDropdownMenu(type);
-        //    }
-        //});
+        String path = createPageArea("publishers/publisherList", new Runnable() {
+            @Override public void run() {
+                control(by.path("/publisher[FlexiblePublisher]/publishers/hetero-list-add[publisherList]")).selectDropdownMenu(type);
+            }
+        });
 
-        // TODO: Return the new publishers path not the path of the flex publisher
-        return newInstance(type, this, getPath());
+        return newInstance(type, this, path);
     }
+
+    //@Override
+    //public @Nonnull String createPageArea(String name, Runnable action) throws TimeoutException {
+    //    String pathPrefix = name;
+    //    return getPage().createPageArea(pathPrefix, action);
+    //}
+
+    //@Override
+    //public String getPath() {
+    //    return "";
+    //}
 }
