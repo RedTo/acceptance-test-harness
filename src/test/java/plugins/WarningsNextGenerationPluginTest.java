@@ -390,9 +390,11 @@ public class WarningsNextGenerationPluginTest extends AbstractJUnitTest {
     }
 
     private void restartJenkinsAndLogin(final String username) {
-        jenkins.visit("restart");
-        jenkins.clickButton("Yes");
-        jenkins.waitForStarted();
+        jenkins.restart();
+
+        //jenkins.visit("restart");
+        //jenkins.clickButton("Yes");
+        //jenkins.waitForStarted();
 
         if (username != null && !username.isEmpty()) {
             jenkins.login().doLogin(username);
