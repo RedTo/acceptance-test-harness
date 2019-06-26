@@ -2,10 +2,6 @@ package org.jenkinsci.test.acceptance.plugins.flexible_publish;
 
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
-
-import org.openqa.selenium.TimeoutException;
-
 import org.jenkinsci.test.acceptance.po.AbstractStep;
 import org.jenkinsci.test.acceptance.po.Describable;
 import org.jenkinsci.test.acceptance.po.Job;
@@ -61,18 +57,6 @@ public class FlexiblePublisher extends AbstractStep implements PostBuildStep {
         return p;
     }
 
-
-    //private <T extends Step> T addStep(final Class<T> type, final String section) {
-    //    ensureConfigPage();
-//
-    //    String path = createPageArea('/' + section, new Runnable() {
-    //        @Override public void run() {
-    //            control(by.path("/hetero-list-add[%s]", section)).selectDropdownMenu(type);
-    //        }
-    //    });
-    //    return newInstance(type, this, path);
-    //}
-
     private <T extends Step> T addStep(final Class<T> type) {
         // TODO: Ensure tat configuration page is opened
         //ensureConfigPage();
@@ -83,17 +67,8 @@ public class FlexiblePublisher extends AbstractStep implements PostBuildStep {
             }
         });
 
-        return newInstance(type, this, path);
+        // TODO: Currently returns null because flex publish publishers are constructed differently
+        //return newInstance(type, this, path);
+        return null;
     }
-
-    //@Override
-    //public @Nonnull String createPageArea(String name, Runnable action) throws TimeoutException {
-    //    String pathPrefix = name;
-    //    return getPage().createPageArea(pathPrefix, action);
-    //}
-
-    //@Override
-    //public String getPath() {
-    //    return "";
-    //}
 }

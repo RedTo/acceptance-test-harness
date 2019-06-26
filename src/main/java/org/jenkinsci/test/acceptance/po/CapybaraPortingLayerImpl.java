@@ -400,7 +400,7 @@ public class CapybaraPortingLayerImpl implements CapybaraPortingLayer {
                 }
                 for (int i = 0; i < pts.length; i++) {
                     if (args[i] != null && !pts[i].isInstance(args[i])) {
-                        continue OUTER;
+                        //continue OUTER;
                     }
                 }
 
