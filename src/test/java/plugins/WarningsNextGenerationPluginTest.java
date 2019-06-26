@@ -58,7 +58,6 @@ import org.jenkinsci.test.acceptance.po.Build.Result;
 import org.jenkinsci.test.acceptance.po.DumbSlave;
 import org.jenkinsci.test.acceptance.po.FreeStyleJob;
 import org.jenkinsci.test.acceptance.po.GlobalSecurityConfig;
-import org.jenkinsci.test.acceptance.po.JenkinsDatabaseSecurityRealm;
 import org.jenkinsci.test.acceptance.po.Job;
 import org.jenkinsci.test.acceptance.po.Slave;
 import org.jenkinsci.test.acceptance.po.WorkflowJob;
@@ -391,10 +390,6 @@ public class WarningsNextGenerationPluginTest extends AbstractJUnitTest {
 
     private void restartJenkinsAndLogin(final String username) {
         jenkins.restart();
-
-        //jenkins.visit("restart");
-        //jenkins.clickButton("Yes");
-        //jenkins.waitForStarted();
 
         if (username != null && !username.isEmpty()) {
             jenkins.login().doLogin(username);
